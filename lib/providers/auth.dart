@@ -95,6 +95,9 @@ class Auth with ChangeNotifier {
   Future<void> logout() async {
     _token = null;
     _userId = null;
+    _name = null;
+    _email = null;
+    _imageUrl = null;
     _expiryDate = null;
     if (_authTimer != null) {
       _authTimer!.cancel();

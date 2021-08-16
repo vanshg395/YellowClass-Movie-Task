@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 // WIDGETS
 import '../widgets/button.dart';
@@ -45,26 +44,23 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         );
         return;
       }
-      formKey.currentState!.save();
-      final movie = Movie(
-        id: Uuid().v4(),
-        name: data['name'],
-        directorName: data['director'],
-        posterPath: data['poster'],
-      );
-      await Provider.of<MovieProvider>(context, listen: false).addMovie(
-        Provider.of<Auth>(context, listen: false).userId!,
-        movie,
-      );
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Movie Added Successfully'),
-          duration: const Duration(seconds: 3),
-          // margin: EdgeInsets.all(12),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      // formKey.currentState!.save();
+      // final movie = Movie(
+      //   userId: Provider.of<Auth>(context, listen: false).userId,
+      //   name: data['name'],
+      //   directorName: data['director'],
+      //   posterPath: data['poster'],
+      // );
+      // await Provider.of<MovieProvider>(context, listen: false).addMovie(movie);
+      // Navigator.of(context).pop();
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('Movie Added Successfully'),
+      //     duration: const Duration(seconds: 3),
+      //     // margin: EdgeInsets.all(12),
+      //     behavior: SnackBarBehavior.floating,
+      //   ),
+      // );
     } catch (e) {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +80,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Add Movie'),
+          title: Text('Edit Movie'),
         ),
         body: Container(
           width: double.infinity,

@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 // SCREENS
 import '../add_movie_screen.dart';
 
+// WIDGETS
+import '../../widgets/movie_tile.dart';
+
 // PROVIDERS
 import '../../providers/auth.dart';
 import '../../providers/movie.dart';
@@ -49,9 +52,24 @@ class _HomeTabState extends State<HomeTab> {
           'Home',
         ),
       ),
-      body: Text('Home'),
+      body: Container(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 16),
+              ...Provider.of<MovieProvider>(context)
+                  .movies
+                  .map((movie) => MovieTile(movie: movie))
+                  .toList(),
+              SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        backgroundColor: Colors.blueGrey,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(

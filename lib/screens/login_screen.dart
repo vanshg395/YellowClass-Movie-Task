@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
     try {
-      Provider.of<Auth>(context, listen: false).signin();
+      await Provider.of<Auth>(context, listen: false).signin();
     } catch (e) {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.white,
               ),
-              child: CircularProgressIndicator(),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           ),
         ],

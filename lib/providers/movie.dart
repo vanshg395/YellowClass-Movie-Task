@@ -7,12 +7,13 @@ import '../models/movie.dart';
 class MovieProvider with ChangeNotifier {
   List<Movie> _movies = [];
 
-  Future<void> addMovie(Movie movie) async {
+  List<Movie> get movies => [..._movies];
+
+  Future<void> addMovie(String userId, Movie movie) async {
     try {
       var box = await Hive.openBox('movies');
       _movies.add(movie);
-      await box.put(
-          movie.userId, _movies.map((movie) => movie.toObject()).toList());
+      await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
       notifyListeners();
       box.close();
     } catch (e) {
@@ -29,7 +30,7 @@ class MovieProvider with ChangeNotifier {
         _movies = (extractedMovies as List<dynamic>)
             .map(
               (movie) => Movie(
-                userId: movie['userId'],
+                id: movie['id'],
                 name: movie['name'],
                 directorName: movie['director'],
                 posterPath: movie['posterPath'],

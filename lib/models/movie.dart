@@ -1,14 +1,11 @@
 class Movie {
-  String? userId;
-
+  String? id;
   String? name;
-
   String? directorName;
-
   String? posterPath;
 
   Movie({
-    required this.userId,
+    required this.id,
     required this.name,
     required this.directorName,
     required this.posterPath,
@@ -16,7 +13,7 @@ class Movie {
 
   Map<String, String> toObject() {
     return {
-      'userId': this.userId!,
+      'id': this.id!,
       'name': this.name!,
       'director': this.directorName!,
       'posterPath': this.posterPath!,
