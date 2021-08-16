@@ -17,6 +17,7 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
   Future<void> logout() async {
+    Provider.of<MovieProvider>(context, listen: false).resetMovies();
     await Provider.of<Auth>(context, listen: false).logout();
   }
 

@@ -49,6 +49,7 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void editMovie(Movie movie) {
+    HapticFeedback.lightImpact();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => UpdateMovieScreen(movie: movie),
@@ -57,6 +58,31 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Future<void> deleteMovie(Movie movie) async {
+    HapticFeedback.lightImpact();
+    bool isConfirmed = false;
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Confirm'),
+        content: Text('Are you sure that you want to delete ${movie.name}?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              isConfirmed = true;
+              Navigator.of(context).pop();
+            },
+            child: Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('No'),
+          ),
+        ],
+      ),
+    );
+    if (!isConfirmed) return;
     try {
       await Provider.of<MovieProvider>(context, listen: false).deleteMovie(
         Provider.of<Auth>(context, listen: false).userId!,

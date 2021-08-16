@@ -25,7 +25,6 @@ class MovieProvider with ChangeNotifier {
     try {
       var box = await Hive.openBox('movies');
       final extractedMovies = box.get(userId);
-      print(extractedMovies);
       if (extractedMovies != null) {
         _movies = (extractedMovies as List<dynamic>)
             .map(
@@ -67,5 +66,9 @@ class MovieProvider with ChangeNotifier {
     } catch (e) {
       throw e;
     }
+  }
+
+  void resetMovies() {
+    _movies = [];
   }
 }
