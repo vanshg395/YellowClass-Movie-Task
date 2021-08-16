@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1067810995787",
+    "project_id": "movietracker-b4c1f",
+    "storage_bucket": "movietracker-b4c1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067810995787:android:ee2ced5f0c56e91d1857ce",
+        "android_client_info": {
+          "package_name": "com.vanshgoel.movietracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067810995787-acqcsa6up3qt7nr4d59udv6f1gd4b766.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vanshgoel.movietracker",
+            "certificate_hash": "918280c8c3b3522352e6b797b4173ac2ca249107"
+          }
+        },
+        {
+          "client_id": "1067810995787-cngoul62lh9j2109u2dfofusfo0p1j1n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq4fvbm1aalJYrZ79IzeKIH_Qa9MC9SYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067810995787-cngoul62lh9j2109u2dfofusfo0p1j1n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
