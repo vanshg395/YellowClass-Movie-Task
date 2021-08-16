@@ -8,9 +8,13 @@ class MovieTile extends StatelessWidget {
   const MovieTile({
     Key? key,
     required this.movie,
+    required this.editHandler,
+    required this.deleteHandler,
   }) : super(key: key);
 
   final Movie movie;
+  final Function editHandler;
+  final Function deleteHandler;
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +72,14 @@ class MovieTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => editHandler(),
                     icon: Icon(
                       Icons.edit,
                       color: Colors.white,
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => deleteHandler(),
                     icon: Icon(
                       Icons.delete,
                       color: Colors.red[400],

@@ -43,4 +43,29 @@ class MovieProvider with ChangeNotifier {
       throw e;
     }
   }
+
+  Future<void> updateMovie(String userId, Movie movie) async {
+    try {
+      var box = await Hive.openBox('movies');
+      _movies[_movies.indexWhere(
+          (retrievedMovie) => retrievedMovie.id == movie.id)] = movie;
+      await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
+      notifyListeners();
+      box.close();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> deleteMovie(String userId, Movie movie) async {
+    try {
+      var box = await Hive.openBox('movies');
+      _movies.remove(movie);
+      await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
+      notifyListeners();
+      box.close();
+    } catch (e) {
+      throw e;
+    }
+  }
 }

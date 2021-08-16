@@ -16,20 +16,32 @@ import '../models/movie.dart';
 import '../providers/auth.dart';
 import '../providers/movie.dart';
 
-class AddMovieScreen extends StatefulWidget {
-  const AddMovieScreen({Key? key}) : super(key: key);
+class UpdateMovieScreen extends StatefulWidget {
+  const UpdateMovieScreen({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
 
   @override
-  _AddMovieScreenState createState() => _AddMovieScreenState();
+  _UpdateMovieScreenState createState() => _UpdateMovieScreenState();
+
+  final Movie movie;
 }
 
-class _AddMovieScreenState extends State<AddMovieScreen> {
+class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = true;
   Map<String, dynamic> data = {};
   String? imagePath;
 
-  Future<void> addMovie() async {
+  @override
+  void initState() {
+    super.initState();
+    imagePath = widget.movie.posterPath;
+    data['poster'] = imagePath;
+  }
+
+  Future<void> updateMovie() async {
     FocusScope.of(context).unfocus();
     try {
       if (!formKey.currentState!.validate()) return;
@@ -44,23 +56,26 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         );
         return;
       }
-      // formKey.currentState!.save();
-      // final movie = Movie(
-      //   userId: Provider.of<Auth>(context, listen: false).userId,
-      //   name: data['name'],
-      //   directorName: data['director'],
-      //   posterPath: data['poster'],
-      // );
-      // await Provider.of<MovieProvider>(context, listen: false).addMovie(movie);
-      // Navigator.of(context).pop();
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Movie Added Successfully'),
-      //     duration: const Duration(seconds: 3),
-      //     // margin: EdgeInsets.all(12),
-      //     behavior: SnackBarBehavior.floating,
-      //   ),
-      // );
+      formKey.currentState!.save();
+      final movie = Movie(
+        id: widget.movie.id,
+        name: data['name'],
+        directorName: data['director'],
+        posterPath: data['poster'],
+      );
+      await Provider.of<MovieProvider>(context, listen: false).updateMovie(
+        Provider.of<Auth>(context, listen: false).userId!,
+        movie,
+      );
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Movie Updated Successfully'),
+          duration: const Duration(seconds: 3),
+          // margin: EdgeInsets.all(12),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     } catch (e) {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -80,7 +95,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Edit Movie'),
+          title: Text('Update Movie'),
         ),
         body: Container(
           width: double.infinity,
@@ -92,6 +107,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
+                    initialValue: widget.movie.name,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Name',
@@ -111,6 +127,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
+                    initialValue: widget.movie.directorName,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Director',
@@ -175,8 +192,8 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                 ),
                 Spacer(),
                 Button(
-                  title: 'ADD',
-                  onTap: addMovie,
+                  title: 'UPDATE',
+                  onTap: updateMovie,
                 ),
                 SizedBox(height: 24),
               ],

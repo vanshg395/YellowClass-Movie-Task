@@ -4,9 +4,13 @@ import 'package:provider/provider.dart';
 
 // SCREENS
 import '../add_movie_screen.dart';
+import '../update_movie_screen.dart';
 
 // WIDGETS
 import '../../widgets/movie_tile.dart';
+
+// MODELS
+import '../../models/movie.dart';
 
 // PROVIDERS
 import '../../providers/auth.dart';
@@ -44,6 +48,33 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
 
+  void editMovie(Movie movie) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => UpdateMovieScreen(movie: movie),
+      ),
+    );
+  }
+
+  Future<void> deleteMovie(Movie movie) async {
+    try {
+      await Provider.of<MovieProvider>(context, listen: false).deleteMovie(
+        Provider.of<Auth>(context, listen: false).userId!,
+        movie,
+      );
+    } catch (e) {
+      HapticFeedback.lightImpact();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          duration: const Duration(seconds: 3),
+          // margin: EdgeInsets.all(12),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +91,13 @@ class _HomeTabState extends State<HomeTab> {
               SizedBox(height: 16),
               ...Provider.of<MovieProvider>(context)
                   .movies
-                  .map((movie) => MovieTile(movie: movie))
+                  .map(
+                    (movie) => MovieTile(
+                      movie: movie,
+                      editHandler: () => editMovie(movie),
+                      deleteHandler: () => deleteMovie(movie),
+                    ),
+                  )
                   .toList(),
               SizedBox(height: 16),
             ],
