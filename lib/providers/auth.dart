@@ -11,6 +11,7 @@ class Auth with ChangeNotifier {
   String? _userId;
   String? _name;
   String? _email;
+  String? _imageUrl;
   DateTime? _expiryDate;
   Timer? _authTimer;
 
@@ -27,6 +28,7 @@ class Auth with ChangeNotifier {
   String? get userId => _userId;
   String? get name => _name;
   String? get email => _email;
+  String? get imageUrl => _imageUrl;
 
   Future<void> signin() async {
     try {
@@ -50,6 +52,7 @@ class Auth with ChangeNotifier {
       _userId = userCredential.user!.uid;
       _name = userCredential.user!.displayName;
       _email = userCredential.user!.email;
+      _imageUrl = userCredential.user!.photoURL;
       _autoLogout();
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode({
@@ -57,6 +60,7 @@ class Auth with ChangeNotifier {
         'name': _name,
         'email': _email,
         'userId': _userId,
+        'imageUrl': _imageUrl,
         'expiryDate': _expiryDate!.toIso8601String(),
       });
       prefs.setString('userData', userData);
@@ -71,8 +75,6 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('userData')) {
       return false;
     }
-    print(prefs.containsKey('userData'));
-    print('trying auto login');
     final extractedUserData = json.decode(prefs.getString('userData')!);
     final extractedExpiryDate =
         DateTime.parse(extractedUserData['expiryDate'] as String);
@@ -83,6 +85,7 @@ class Auth with ChangeNotifier {
     _name = extractedUserData['name'] as String;
     _email = extractedUserData['email'] as String;
     _userId = extractedUserData['userId'] as String;
+    _imageUrl = extractedUserData['imageUrl'] as String;
     _expiryDate = extractedExpiryDate;
     notifyListeners();
     _autoLogout();

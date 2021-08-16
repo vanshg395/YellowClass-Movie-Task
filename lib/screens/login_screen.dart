@@ -81,9 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SocialButton(
                       text: 'SIGN IN WITH GOOGLE',
                       iconName: 'google',
-                      textColor: Theme.of(context).cardColor,
-                      bgColor: Theme.of(context).buttonColor.withOpacity(0.7),
-                      borderColor: Theme.of(context).dividerColor,
+                      textColor: Color(0xFF16222A),
+                      bgColor: Colors.white.withOpacity(0.7),
+                      borderColor: Color(0xFFB2B2B2),
                       isBlur: true,
                       onTap: signInWithGoogle,
                     ),
