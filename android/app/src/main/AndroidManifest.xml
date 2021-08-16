@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yellowclass_movie_task">
    <application
-        android:label="yellowclass_movie_task"
+        android:label="Movie Tracker"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
