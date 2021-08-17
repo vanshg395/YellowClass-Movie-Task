@@ -18,7 +18,6 @@ import '../providers/movie.dart';
 void main() async {
   runApp(MyApp());
   final currentDir = await getApplicationDocumentsDirectory();
-  print(currentDir.path);
   Hive.init(currentDir.path);
   await Firebase.initializeApp();
 }
@@ -40,6 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Movie Tracker',
           theme: ThemeData(
             primaryColor: Color(0xFFC9000D),

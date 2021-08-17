@@ -18,6 +18,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> logout() async {
     Provider.of<MovieProvider>(context, listen: false).resetMovies();
+    Navigator.of(context).pop();
     await Provider.of<Auth>(context, listen: false).logout();
   }
 

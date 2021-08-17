@@ -25,7 +25,6 @@ class MovieProvider with ChangeNotifier {
     try {
       var box = await Hive.openBox('movies');
       final extractedMovies = box.get(userId);
-      print('opened');
       if (extractedMovies != null) {
         _movies = (extractedMovies as List<dynamic>)
             .map(
