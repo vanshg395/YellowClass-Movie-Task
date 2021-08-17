@@ -17,9 +17,10 @@ import '../providers/movie.dart';
 
 void main() async {
   runApp(MyApp());
-  await Firebase.initializeApp();
   final currentDir = await getApplicationDocumentsDirectory();
+  print(currentDir.path);
   Hive.init(currentDir.path);
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {

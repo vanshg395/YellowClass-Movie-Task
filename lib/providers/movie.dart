@@ -14,8 +14,8 @@ class MovieProvider with ChangeNotifier {
       var box = await Hive.openBox('movies');
       _movies.add(movie);
       await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
+      await box.close();
       notifyListeners();
-      box.close();
     } catch (e) {
       throw e;
     }
@@ -25,6 +25,7 @@ class MovieProvider with ChangeNotifier {
     try {
       var box = await Hive.openBox('movies');
       final extractedMovies = box.get(userId);
+      print('opened');
       if (extractedMovies != null) {
         _movies = (extractedMovies as List<dynamic>)
             .map(
@@ -38,6 +39,7 @@ class MovieProvider with ChangeNotifier {
             )
             .toList();
       }
+      await box.close();
       notifyListeners();
     } catch (e) {
       throw e;
@@ -50,8 +52,8 @@ class MovieProvider with ChangeNotifier {
       _movies[_movies.indexWhere(
           (retrievedMovie) => retrievedMovie.id == movie.id)] = movie;
       await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
+      await box.close();
       notifyListeners();
-      box.close();
     } catch (e) {
       throw e;
     }
@@ -62,8 +64,8 @@ class MovieProvider with ChangeNotifier {
       var box = await Hive.openBox('movies');
       _movies.remove(movie);
       await box.put(userId, _movies.map((movie) => movie.toObject()).toList());
+      await box.close();
       notifyListeners();
-      box.close();
     } catch (e) {
       throw e;
     }

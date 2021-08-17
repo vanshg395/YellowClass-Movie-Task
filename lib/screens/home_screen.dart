@@ -141,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen>
         Provider.of<Auth>(context, listen: false).userId!,
         movie,
       );
+      getMyMovies();
     } catch (e) {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
