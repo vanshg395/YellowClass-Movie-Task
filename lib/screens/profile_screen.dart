@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // WIDGETS
-import '../../widgets/button.dart';
+import '../widgets/button.dart';
 
 // PROVIDERS
-import '../../providers/auth.dart';
-import '../../providers/movie.dart';
+import '../providers/auth.dart';
+import '../providers/movie.dart';
 
-class ProfileTab extends StatefulWidget {
-  const ProfileTab({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _ProfileTabState createState() => _ProfileTabState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileTabState extends State<ProfileTab> {
+class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> logout() async {
     Provider.of<MovieProvider>(context, listen: false).resetMovies();
     await Provider.of<Auth>(context, listen: false).logout();
@@ -26,12 +26,23 @@ class _ProfileTabState extends State<ProfileTab> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        titleSpacing: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.chevron_left,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Container(
         width: double.infinity,
         child: Column(
           children: [
             Container(
+              color: Colors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 24,
@@ -67,16 +78,23 @@ class _ProfileTabState extends State<ProfileTab> {
                 ],
               ),
             ),
-            ListTile(
-              title: Text('Movies Count'),
-              trailing: Text(
-                  Provider.of<MovieProvider>(context).movies.length.toString()),
+            SizedBox(height: 6),
+            Container(
+              color: Colors.white,
+              child: ListTile(
+                title: Text('Movies Count'),
+                trailing: Text(Provider.of<MovieProvider>(context)
+                    .movies
+                    .length
+                    .toString()),
+              ),
             ),
-            SizedBox(height: 16),
+            Spacer(),
             Button(
               title: 'LOGOUT',
               onTap: logout,
             ),
+            SizedBox(height: 16),
           ],
         ),
       ),

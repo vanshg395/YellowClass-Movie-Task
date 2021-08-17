@@ -49,23 +49,26 @@ class MovieTile extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(8),
                 bottomRight: Radius.circular(8),
+              ),
+              border: Border.all(
+                color: Color(0xFF000000).withOpacity(0.2),
               ),
             ),
             child: ListTile(
               title: Text(
                 movie.name!,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               subtitle: Text(
                 movie.directorName!,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black54,
                 ),
               ),
               trailing: Row(
@@ -75,7 +78,7 @@ class MovieTile extends StatelessWidget {
                     onPressed: () => editHandler(),
                     icon: Icon(
                       Icons.edit,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                   IconButton(

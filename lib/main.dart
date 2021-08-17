@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 // SCREENS
 import './screens/login_screen.dart';
-import './screens/tabs_screen.dart';
+import './screens/home_screen.dart';
 import './screens/loading_screen.dart';
 
 // PROVIDERS
@@ -41,11 +41,12 @@ class MyApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Movie Tracker',
           theme: ThemeData(
+            primaryColor: Color(0xFFC9000D),
             scaffoldBackgroundColor: Color(0xFFF2F2F2),
-            fontFamily: GoogleFonts.inter().fontFamily,
+            fontFamily: GoogleFonts.montserrat().fontFamily,
           ),
           home: auth.isAuth
-              ? TabsScreen()
+              ? HomeScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, authResultSnapshot) =>

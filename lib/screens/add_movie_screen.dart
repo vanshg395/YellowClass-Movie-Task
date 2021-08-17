@@ -85,6 +85,16 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Add Movie'),
+          titleSpacing: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.chevron_left,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: Container(
           width: double.infinity,
@@ -99,7 +109,45 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Name',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -118,7 +166,45 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Director',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -131,25 +217,29 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                   ),
                 ),
                 SizedBox(height: 16),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  alignment: Alignment.centerLeft,
-                  child: Text('Poster'),
-                ),
-                SizedBox(height: 8),
                 GestureDetector(
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     height: 200,
                     width: double.infinity,
                     decoration: BoxDecoration(
+                      color: Color(0xFFEBEBEB).withOpacity(0.7),
                       border: Border.all(
-                        color: Colors.grey,
+                        color: Color(0xFFB2B2B2).withOpacity(0.5),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: imagePath == null
-                        ? Icon(Icons.upload)
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.upload),
+                              SizedBox(height: 6),
+                              Text(
+                                'Upload Movie Poster',
+                              ),
+                            ],
+                          )
                         : Stack(
                             alignment: Alignment.center,
                             children: [

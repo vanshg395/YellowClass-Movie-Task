@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 // WIDGETS
@@ -45,53 +46,83 @@ class _LoginScreenState extends State<LoginScreen> {
     return Stack(
       children: [
         Scaffold(
-          body: SafeArea(
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 36),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Movie Tracker',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w700,
-                      ),
+          body: Stack(
+            children: [
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/img/bg.png',
                     ),
+                    fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 36),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: SocialButton(
-                      text: 'SIGN IN WITH GOOGLE',
-                      iconName: 'google',
-                      textColor: Color(0xFF16222A),
-                      bgColor: Colors.white.withOpacity(0.7),
-                      borderColor: Color(0xFFB2B2B2),
-                      isBlur: true,
-                      onTap: signInWithGoogle,
-                    ),
-                  ),
-                  SizedBox(height: 36),
-                ],
+                ),
               ),
-            ),
+              SafeArea(
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 36),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Progress',
+                              height: 0.6,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Movie\n',
+                                style: TextStyle(
+                                  fontSize: 56,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Tracker',
+                                style: TextStyle(
+                                  fontSize: 37,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Container(
+                        width: 300,
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Now keep track of your favourite movies hassle-free.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: SocialButton(
+                          text: 'SIGN IN WITH GOOGLE',
+                          iconName: 'google',
+                          textColor: Color(0xFF16222A),
+                          bgColor: Colors.white,
+                          borderColor: Colors.white,
+                          isBlur: true,
+                          onTap: signInWithGoogle,
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         if (isLoading) ...[

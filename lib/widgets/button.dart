@@ -18,7 +18,7 @@ class Button extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(5),
         ),
         alignment: Alignment.center,
