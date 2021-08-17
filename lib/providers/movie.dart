@@ -32,6 +32,7 @@ class MovieProvider with ChangeNotifier {
                 id: movie['id'],
                 name: movie['name'],
                 directorName: movie['director'],
+                genre: movie['genre'],
                 posterPath: movie['posterPath'],
               ),
             )

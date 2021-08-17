@@ -29,6 +29,7 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
   bool isLoading = true;
   Map<String, dynamic> data = {};
   String? imagePath;
+  String? genre;
 
   Future<void> addMovie() async {
     FocusScope.of(context).unfocus();
@@ -50,13 +51,14 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
         id: Uuid().v4(),
         name: data['name'],
         directorName: data['director'],
+        genre: data['genre'],
         posterPath: data['poster'],
       );
       await Provider.of<MovieProvider>(context, listen: false).addMovie(
         Provider.of<Auth>(context, listen: false).userId!,
         movie,
       );
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Movie Added Successfully'),
@@ -213,6 +215,103 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                     },
                     onSaved: (value) {
                       data['director'] = value;
+                    },
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: DropdownButtonFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('Action'),
+                        value: 'Action',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Adventure'),
+                        value: 'Adventure',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Drama'),
+                        value: 'Drama',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Horror'),
+                        value: 'Horror',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Romance'),
+                        value: 'Romance',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Sci-Fi'),
+                        value: 'Sci-Fi',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Thriller'),
+                        value: 'Thriller',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Other'),
+                        value: 'Other',
+                      ),
+                    ],
+                    value: genre,
+                    onChanged: (value) {
+                      setState(() {
+                        genre = value as String;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Genre',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    validator: (value) {
+                      if (genre == null) {
+                        return 'This field is required.';
+                      }
+                    },
+                    onSaved: (value) {
+                      data['genre'] = value;
                     },
                   ),
                 ),

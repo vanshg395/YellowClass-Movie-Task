@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController hideFabAnimation;
   String genre = 'All';
+  List<Movie> filteredMovies = [];
 
   @override
   void initState() {
@@ -47,9 +48,13 @@ class _HomeScreenState extends State<HomeScreen>
 
   Future<void> getMyMovies() async {
     try {
-      Provider.of<MovieProvider>(context, listen: false).getAllMovies(
+      await Provider.of<MovieProvider>(context, listen: false).getAllMovies(
         Provider.of<Auth>(context, listen: false).userId!,
       );
+      setState(() {
+        filteredMovies =
+            Provider.of<MovieProvider>(context, listen: false).movies;
+      });
     } catch (e) {
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,13 +68,39 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
+  void filterHandler(String genreName) {
+    setState(() {
+      if (genreName == 'All') {
+        filteredMovies =
+            Provider.of<MovieProvider>(context, listen: false).movies;
+      } else {
+        filteredMovies = Provider.of<MovieProvider>(context, listen: false)
+            .movies
+            .where((movie) => movie.genre == genreName)
+            .toList();
+      }
+    });
+  }
+
   void editMovie(Movie movie) {
     HapticFeedback.lightImpact();
-    Navigator.of(context).push(
+    Navigator.of(context)
+        .push(
       MaterialPageRoute(
         builder: (ctx) => UpdateMovieScreen(movie: movie),
       ),
-    );
+    )
+        .then((value) {
+      if (value != null) {
+        if (value) {
+          getMyMovies();
+          setState(() {
+            genre = 'All';
+          });
+        }
+      }
+    });
+    ;
   }
 
   Future<void> deleteMovie(Movie movie) async {
@@ -206,6 +237,66 @@ class _HomeScreenState extends State<HomeScreen>
                     'Movies Watched',
                   ),
                   Spacer(),
+                  Text(
+                    'Genre:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  DropdownButton(
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('All'),
+                        value: 'All',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Action'),
+                        value: 'Action',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Adventure'),
+                        value: 'Adventure',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Drama'),
+                        value: 'Drama',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Horror'),
+                        value: 'Horror',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Romance'),
+                        value: 'Romance',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Sci-Fi'),
+                        value: 'Sci-Fi',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Thriller'),
+                        value: 'Thriller',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Other'),
+                        value: 'Other',
+                      ),
+                    ],
+                    value: genre,
+                    onChanged: (value) {
+                      setState(() {
+                        genre = value as String;
+                      });
+                      filterHandler(genre);
+                    },
+                    underline: SizedBox(),
+                  ),
                 ],
               ),
             ),
@@ -216,8 +307,7 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Column(
                     children: [
                       SizedBox(height: 16),
-                      ...Provider.of<MovieProvider>(context)
-                          .movies
+                      ...filteredMovies
                           .map(
                             (movie) => MovieTile(
                               movie: movie,
@@ -240,11 +330,22 @@ class _HomeScreenState extends State<HomeScreen>
           child: Icon(Icons.add),
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
-            Navigator.of(context).push(
+            Navigator.of(context)
+                .push(
               MaterialPageRoute(
                 builder: (ctx) => AddMovieScreen(),
               ),
-            );
+            )
+                .then((value) {
+              if (value != null) {
+                if (value) {
+                  getMyMovies();
+                  setState(() {
+                    genre = 'All';
+                  });
+                }
+              }
+            });
           },
         ),
       ),

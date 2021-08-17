@@ -66,11 +66,12 @@ class MovieTile extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                movie.directorName!,
+                movie.directorName! + '\n' + movie.genre!,
                 style: TextStyle(
                   color: Colors.black54,
                 ),
               ),
+              isThreeLine: true,
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

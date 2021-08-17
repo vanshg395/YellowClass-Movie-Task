@@ -33,12 +33,15 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
   bool isLoading = true;
   Map<String, dynamic> data = {};
   String? imagePath;
+  String? genre;
 
   @override
   void initState() {
     super.initState();
     imagePath = widget.movie.posterPath;
     data['poster'] = imagePath;
+    genre = widget.movie.genre;
+    data['genre'] = genre;
   }
 
   Future<void> updateMovie() async {
@@ -61,13 +64,14 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
         id: widget.movie.id,
         name: data['name'],
         directorName: data['director'],
+        genre: data['genre'],
         posterPath: data['poster'],
       );
       await Provider.of<MovieProvider>(context, listen: false).updateMovie(
         Provider.of<Auth>(context, listen: false).userId!,
         movie,
       );
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Movie Updated Successfully'),
@@ -111,7 +115,45 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Name',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -131,7 +173,45 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       labelText: 'Director',
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -140,6 +220,103 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
                     },
                     onSaved: (value) {
                       data['director'] = value;
+                    },
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16),
+                  child: DropdownButtonFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('Action'),
+                        value: 'Action',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Adventure'),
+                        value: 'Adventure',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Drama'),
+                        value: 'Drama',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Horror'),
+                        value: 'Horror',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Romance'),
+                        value: 'Romance',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Sci-Fi'),
+                        value: 'Sci-Fi',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Thriller'),
+                        value: 'Thriller',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Other'),
+                        value: 'Other',
+                      ),
+                    ],
+                    value: genre,
+                    onChanged: (value) {
+                      setState(() {
+                        genre = value as String;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Genre',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFFB2B2B2).withOpacity(0.5),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEBEBEB).withOpacity(0.7),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    validator: (value) {
+                      if (genre == null) {
+                        return 'This field is required.';
+                      }
+                    },
+                    onSaved: (value) {
+                      data['genre'] = value;
                     },
                   ),
                 ),
