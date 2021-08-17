@@ -272,6 +272,10 @@ class _HomeScreenState extends State<HomeScreen>
                         value: 'Adventure',
                       ),
                       DropdownMenuItem(
+                        child: Text('Comedy'),
+                        value: 'Comedy',
+                      ),
+                      DropdownMenuItem(
                         child: Text('Drama'),
                         value: 'Drama',
                       ),

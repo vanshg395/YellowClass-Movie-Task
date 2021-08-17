@@ -233,6 +233,10 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                         value: 'Adventure',
                       ),
                       DropdownMenuItem(
+                        child: Text('Comedy'),
+                        value: 'Comedy',
+                      ),
+                      DropdownMenuItem(
                         child: Text('Drama'),
                         value: 'Drama',
                       ),
