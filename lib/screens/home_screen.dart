@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController hideFabAnimation;
   String genre = 'All';
   List<Movie> filteredMovies = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -47,6 +48,9 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Future<void> getMyMovies() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       await Provider.of<MovieProvider>(context, listen: false).getAllMovies(
         Provider.of<Auth>(context, listen: false).userId!,
@@ -66,6 +70,9 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       );
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void filterHandler(String genreName) {
@@ -301,37 +308,42 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             Expanded(
-              child: NotificationListener<ScrollNotification>(
-                onNotification: handleScrollNotification,
-                child: filteredMovies.length == 0
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            size: 34,
-                          ),
-                          SizedBox(height: 16),
-                          Text('No Results Found'),
-                        ],
-                      )
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 16),
-                            ...filteredMovies
-                                .map(
-                                  (movie) => MovieTile(
-                                    movie: movie,
-                                    editHandler: () => editMovie(movie),
-                                    deleteHandler: () => deleteMovie(movie),
-                                  ),
-                                )
-                                .toList(),
-                          ],
-                        ),
-                      ),
-              ),
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : NotificationListener<ScrollNotification>(
+                      onNotification: handleScrollNotification,
+                      child: filteredMovies.length == 0
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 34,
+                                ),
+                                SizedBox(height: 16),
+                                Text('No Results Found'),
+                              ],
+                            )
+                          : SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 16),
+                                  ...filteredMovies
+                                      .map(
+                                        (movie) => MovieTile(
+                                          movie: movie,
+                                          editHandler: () => editMovie(movie),
+                                          deleteHandler: () =>
+                                              deleteMovie(movie),
+                                        ),
+                                      )
+                                      .toList(),
+                                ],
+                              ),
+                            ),
+                    ),
             ),
           ],
         ),
