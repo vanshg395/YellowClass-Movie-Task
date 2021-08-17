@@ -303,22 +303,34 @@ class _HomeScreenState extends State<HomeScreen>
             Expanded(
               child: NotificationListener<ScrollNotification>(
                 onNotification: handleScrollNotification,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16),
-                      ...filteredMovies
-                          .map(
-                            (movie) => MovieTile(
-                              movie: movie,
-                              editHandler: () => editMovie(movie),
-                              deleteHandler: () => deleteMovie(movie),
-                            ),
-                          )
-                          .toList(),
-                    ],
-                  ),
-                ),
+                child: filteredMovies.length == 0
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            size: 34,
+                          ),
+                          SizedBox(height: 16),
+                          Text('No Results Found'),
+                        ],
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 16),
+                            ...filteredMovies
+                                .map(
+                                  (movie) => MovieTile(
+                                    movie: movie,
+                                    editHandler: () => editMovie(movie),
+                                    deleteHandler: () => deleteMovie(movie),
+                                  ),
+                                )
+                                .toList(),
+                          ],
+                        ),
+                      ),
               ),
             ),
           ],
