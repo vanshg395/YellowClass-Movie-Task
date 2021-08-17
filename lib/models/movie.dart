@@ -1,9 +1,9 @@
 class Movie {
-  String? id;
-  String? name;
-  String? directorName;
-  String? genre;
-  String? posterPath;
+  final String id;
+  final String name;
+  final String directorName;
+  final String genre;
+  final String posterPath;
 
   Movie({
     required this.id,
@@ -15,11 +15,11 @@ class Movie {
 
   Map<String, String> toObject() {
     return {
-      'id': this.id!,
-      'name': this.name!,
-      'director': this.directorName!,
-      'genre': this.genre!,
-      'posterPath': this.posterPath!,
+      'id': this.id,
+      'name': this.name,
+      'director': this.directorName,
+      'genre': this.genre,
+      'posterPath': this.posterPath,
     };
   }
 }

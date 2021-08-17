@@ -40,7 +40,7 @@ class MovieTile extends StatelessWidget {
               ),
               image: DecorationImage(
                 image: FileImage(
-                  File(movie.posterPath!),
+                  File(movie.posterPath),
                 ),
                 fit: BoxFit.cover,
               ),
@@ -60,13 +60,13 @@ class MovieTile extends StatelessWidget {
             ),
             child: ListTile(
               title: Text(
-                movie.name!,
+                movie.name,
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
               subtitle: Text(
-                movie.directorName! + '\n' + movie.genre!,
+                movie.directorName + '\n' + movie.genre,
                 style: TextStyle(
                   color: Colors.black54,
                 ),

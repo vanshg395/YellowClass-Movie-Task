@@ -333,13 +333,23 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
                     height: 200,
                     width: double.infinity,
                     decoration: BoxDecoration(
+                      color: Color(0xFFEBEBEB).withOpacity(0.7),
                       border: Border.all(
-                        color: Colors.grey,
+                        color: Color(0xFFB2B2B2).withOpacity(0.5),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: imagePath == null
-                        ? Icon(Icons.upload)
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.upload),
+                              SizedBox(height: 6),
+                              Text(
+                                'Upload Movie Poster',
+                              ),
+                            ],
+                          )
                         : Stack(
                             alignment: Alignment.center,
                             children: [
@@ -349,8 +359,16 @@ class _UpdateMovieScreenState extends State<UpdateMovieScreen> {
                               Positioned(
                                 top: 10,
                                 right: 10,
-                                child: Icon(
-                                  Icons.edit,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: EdgeInsets.all(6),
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                             ],

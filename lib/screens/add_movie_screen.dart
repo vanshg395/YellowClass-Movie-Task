@@ -348,8 +348,16 @@ class _AddMovieScreenState extends State<AddMovieScreen> {
                               Positioned(
                                 top: 10,
                                 right: 10,
-                                child: Icon(
-                                  Icons.edit,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: EdgeInsets.all(6),
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                             ],
